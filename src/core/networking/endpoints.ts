@@ -1,1 +1,1 @@
-export const LOGIN = "auth/login";
+export const AUTH = "v1/authentication/auth";

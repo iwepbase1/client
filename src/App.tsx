@@ -1,13 +1,12 @@
 
-import './App.css'
-import SignUp from './features/SignUp'
+import Auth from './features/Auth'
 
 function App() {
  
 
   return (
     <>
-       <SignUp />
+       <Auth />
     </>
   )
 }
