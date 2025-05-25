@@ -1,8 +1,7 @@
 import { Box, Paper, Typography, Fade } from "@mui/material";
 import StepForm from "./components/StepForm";
 import TopBar from "../../core/components/AppBar";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../store/Auth/AuthSlice";
+import { useSelector } from "react-redux";
 import useAsyncRequest from "../../core/networking/useAsyncRequest";
 import { onBoarding } from "../../store/onBoarding/services";
 import Loader from "../../core/components/Loader";
@@ -10,11 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { USERDASHBOARD } from "../../router/config";
 
 const Onboarding = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const handleLogout = () => {
-    dispatch(logout());
-  };
 
   const loginedUser = useSelector((state: any) => state.auth.user);
 
@@ -29,6 +24,7 @@ const Onboarding = () => {
   };
 
   const handleSubmit = (values: any) => {
+    console.log("Form Data:", loginedUser);
     const payload = {
       email: loginedUser.email,
       participation: values.participation,
@@ -39,7 +35,7 @@ const Onboarding = () => {
       joinWhatsApp: values.joinWhatsApp,
     };
 
-    execute(payload, handleResponse);
+   execute(payload, handleResponse);
   };
 
   return (

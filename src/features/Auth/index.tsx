@@ -21,7 +21,7 @@ import TextInputDropDown from "../../core/components/TextDropDown";
 import { useDispatch } from "react-redux";
 import { signIn } from "../../store/Auth/AuthSlice";
 import { useNavigate } from "react-router-dom";
-import { ONBOARDING } from "../../router/config";
+import { ONBOARDING, USERDASHBOARD } from "../../router/config";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -84,7 +84,8 @@ const Auth = () => {
   const navigate = useNavigate();
   const [newUser, setNewUser] = React.useState(false);
   const { execute, loading } = useAsyncRequest(userLogin);
-  const { execute : registration, loading : registrationLoading } = useAsyncRequest(userRegister);
+  const { execute: registration, loading: registrationLoading } =
+    useAsyncRequest(userRegister);
 
   const initialValues = {
     email: "",
@@ -101,7 +102,10 @@ const Auth = () => {
       const { data } = response;
       if (data?.isNewUser) {
         setNewUser(true);
-      }else{
+      } else if (data?.userData.onBoardingCompleted) {
+        dispatch(signIn(data));
+        navigate(USERDASHBOARD);
+      } else {
         dispatch(signIn(data));
         navigate(ONBOARDING);
       }
@@ -117,16 +121,16 @@ const Auth = () => {
       navigate(ONBOARDING);
     } else {
       console.error("Registration failed:", response.data);
-  }
-}
+    }
+  };
 
   const handleSubmit = (values: typeof initialValues) => {
     console.log("Form Data:", newUser, values);
     if (newUser) {
-     registration(values, handleResponseRegistration);
-    }else {
-    const payload = { email: values.email };
-    execute(payload, handleResponse);
+      registration(values, handleResponseRegistration);
+    } else {
+      const payload = { email: values.email };
+      execute(payload, handleResponse);
     }
   };
 
@@ -272,7 +276,12 @@ const Auth = () => {
                   </>
                 )}
 
-                <Button sx={{mt : 5}} type="submit" fullWidth variant="contained">
+                <Button
+                  sx={{ mt: 5 }}
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                >
                   Continue
                 </Button>
               </Box>
