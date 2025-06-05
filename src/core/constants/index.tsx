@@ -1,6 +1,8 @@
 /* eslint-disable */
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import type { ReactNode } from "react";
+import DrawRoundedIcon from "@mui/icons-material/DrawRounded";
+import { ADMINDASHBOARDHOME, INTERESTSRECIEVED } from "../../router/config";
 
 export const logo = " "
 
@@ -30,8 +32,13 @@ interface DrawerItem {
 export const adminDrawerList: DrawerItem[] = [
     {
       label: "Dashboard",
-      nav: '',
+      nav: ADMINDASHBOARDHOME,
       icon: <DashboardIcon />,
+    },
+    {
+      label: "Interest Revieved",
+      nav: INTERESTSRECIEVED,
+      icon: <DrawRoundedIcon />,
     },
   ];
 
